@@ -3,8 +3,8 @@ plugins {
     id 'kotlin-android'
     id 'kotlin-parcelize'
     id 'kotlin-kapt'
-    id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
+//    id 'com.google.gms.google-services'
+//    id 'com.google.firebase.crashlytics'
     id 'com.spotify.ruler'
     id 'com.google.devtools.ksp'
     id "dev.shreyaspatil.compose-compiler-report-generator"
@@ -36,10 +36,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(props.getProperty("signing.keyFile"))
-            storePassword props.getProperty("signing.storePassword")
-            keyAlias props.getProperty("signing.alias")
-            keyPassword props.getProperty("signing.keyPassword")
+//            storeFile file(props.getProperty("signing.keyFile"))
+//            storePassword props.getProperty("signing.storePassword")
+//            keyAlias props.getProperty("signing.alias")
+//            keyPassword props.getProperty("signing.keyPassword")
         }
     }
 
@@ -62,7 +62,7 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion versions.compose
+        kotlinCompilerExtensionVersion "1.2.0"
     }
     packagingOptions {
         pickFirsts = [
@@ -102,9 +102,9 @@ tasks.register('checkForChangelog') {
 dependencies {
     implementation "androidx.core:core-ktx:1.7.0"
     implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation "androidx.compose.ui:ui:$versions.compose"
-    implementation "androidx.compose.material:material:$versions.compose"
-    implementation "androidx.compose.ui:ui-tooling:$versions.compose_tool"
+    implementation "androidx.compose.ui:ui:1.2.0"
+    implementation "androidx.compose.material:material:1.2.0"
+    implementation "androidx.compose.ui:ui-tooling:1.2.0"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.4.1'
     implementation 'androidx.activity:activity-compose:1.4.0'
     implementation "androidx.constraintlayout:constraintlayout-compose:1.0.0"
@@ -163,5 +163,5 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$versions.compose"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:1.2.0"
 }
