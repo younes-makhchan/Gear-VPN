@@ -1,5 +1,6 @@
 package com.kpstv.vpn.ui.theme
 
+import android.annotation.SuppressLint
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.darkColors
@@ -10,10 +11,11 @@ import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 import com.kpstv.vpn.ui.theme.foregroundColor as foreColor
 
+@SuppressLint("ConflictingOnColor")
 private val DarkColorPalette = darkColors(
   primary = primaryColor,
   primaryVariant = primaryVariantColor,
-  secondary = secondaryTextColorDark,
+  secondary = Color(0xff004aad),
   secondaryVariant = secondaryTextColorMoreDark,
   background = background,
   onSecondary = secondaryTextColorDark,
