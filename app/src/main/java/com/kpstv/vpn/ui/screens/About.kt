@@ -13,6 +13,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.rotate
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -74,8 +75,10 @@ fun AboutScreen(goBack: () -> Unit) {
           modifier = Modifier
             .size(dp150)
             .rotate(iconAngle),
-          painter = painterResource(R.drawable.ic_logo),
-          contentDescription = "logo"
+          painter = painterResource(R.drawable.logo),
+          contentDescription = "logo",
+          tint= Color.Unspecified
+
         )
         Spacer(modifier = Modifier.height(30.dp))
         Text(
