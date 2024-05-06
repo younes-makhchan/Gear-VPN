@@ -18,6 +18,7 @@ private val DarkColorPalette = darkColors(
   background = background,
   onSecondary = secondaryTextColorDark,
   onSurface = secondaryTextColorMoreDark,
+  onBackground = Color.Black,
 )
 
 private val LightColorPalette = lightColors(

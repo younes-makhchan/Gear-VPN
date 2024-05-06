@@ -9,7 +9,7 @@ val Teal200 = Color(0xFF03DAC5)
 
 val foregroundColor = Color(0xFF000000)
 val secondaryTextColorDark = Color(0xFF000000)
-val secondaryTextColorMoreDark = Color(0xFF627199)
+val secondaryTextColorMoreDark = Color(0xFF000000)
 
 val dotColor = Color(0xff004aad)
 val highlightColor = Color(0xA1EDAB0A)
@@ -29,4 +29,4 @@ val cyanDark = Color(0xFF40A5B8)
 val purpleColor = Color(0xFF882391)
 
 val primaryColor = Color(0xff38b6ff)
-val primaryVariantColor = Color(0xff38b6ff)
+val primaryVariantColor = Color(0xFF9CDBFF)
