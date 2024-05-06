@@ -24,22 +24,19 @@ class Splash : AppCompatActivity() {
     setContentView(R.layout.layout_splash)
 
     val imageView = findViewById<ImageView>(R.id.iv_splash)
-    val bitmap = BitmapFactory.decodeResource(resources, R.drawable.logo)
-    imageView.setImageBitmap(bitmap)
+    val avdSplash = AnimatedVectorDrawableCompat.create(this, R.drawable.avd_ic_logo)
+
+    imageView.setImageDrawable(avdSplash)
     window.setBackgroundDrawable(
       ColorDrawable(
-        ContextCompat.getColor(this, R.color.white)
+        ContextCompat.getColor(this, R.color.background)
       )
     )
     imageView.doOnLayout {
-//      avdSplash?.registerAnimationCallback(animationCallback)
-//      avdSplash?.start()
+      avdSplash?.registerAnimationCallback(animationCallback)
+      avdSplash?.start()
     }
-    Handler(Looper.getMainLooper()).postDelayed({
-      // Navigate to the next activity or fragment
-      startActivity(Intent(this@Splash, Main::class.java))
-      finish() // Optional: Finish the splash screen activity
-    }, 2000)
+
   }
 
   private val animationCallback = object : Animatable2Compat.AnimationCallback() {
