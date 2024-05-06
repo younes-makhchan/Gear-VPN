@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Gear VPN</string>
+    <string name="app_name">N7 VPN</string>
     <string name="app_description"><![CDATA[Fast, Secure & Open sourced VPN based on OpenVPN.]]></string>
 
     <string name="status_connect">CONNECT</string>

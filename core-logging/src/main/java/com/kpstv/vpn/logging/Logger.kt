@@ -1,8 +1,8 @@
 package com.kpstv.vpn.logging
 
 import android.content.Context
-import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+//import com.google.firebase.analytics.FirebaseAnalytics
+//import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.jetbrains.annotations.NonNls
 import timber.log.Timber
 
@@ -19,8 +19,8 @@ object Logger {
 
   @JvmSynthetic
   fun disable(context: Context) {
-    FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(false)
-    FirebaseAnalytics.getInstance(context).setAnalyticsCollectionEnabled(false)
+//    FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(false)
+//    FirebaseAnalytics.getInstance(context).setAnalyticsCollectionEnabled(false)
   }
 
   @JvmStatic
@@ -65,10 +65,10 @@ object Logger {
   // Firebase Crashlytics tree
   private class CrashlyticsTree : ExtendedDebugTree() {
     override fun flush(tag: String?, message: String, t: Throwable?) {
-      FirebaseCrashlytics.getInstance().log("[$tag] - $message")
-      if (t != null) {
-        FirebaseCrashlytics.getInstance().recordException(t) // records non-fatal exceptions
-      }
+//      FirebaseCrashlytics.getInstance().log("[$tag] - $message")
+//      if (t != null) {
+//        FirebaseCrashlytics.getInstance().recordException(t) // records non-fatal exceptions
+//      }
     }
   }
 }

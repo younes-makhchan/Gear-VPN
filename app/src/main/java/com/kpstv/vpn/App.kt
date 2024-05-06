@@ -35,7 +35,7 @@ class App : Application(), Configuration.Provider {
 
     if (BuildConfig.DEBUG) {
       // disable crashlytics & analytics for debug builds
-      Logger.disable(this)
+//      Logger.disable(this)
     }
 
   }

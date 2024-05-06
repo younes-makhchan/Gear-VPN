@@ -27,7 +27,7 @@ class Main : Dagger() {
   private val planViewModel by viewModels<PlanViewModel>()
 
   private val vpnHelper by lazy { VpnActivityHelper(this) }
-  private val billingHelper by lazy { BillingHelper(this, planViewModel) }
+//  private val billingHelper by lazy { BillingHelper(this, planViewModel) }
   private val updateHelper by lazy { InAppUpdates(this) }
 
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,7 +45,7 @@ class Main : Dagger() {
         ProvideWindowInsets {
           CoilCustomImageLoader {
             Surface(color = MaterialTheme.colors.background) {
-              NavigationScreen(navigator = navigator, billingHelper = billingHelper)
+              NavigationScreen(navigator = navigator, )
             }
           }
         }
@@ -53,7 +53,7 @@ class Main : Dagger() {
     }
 
     vpnHelper.initializeAndObserve()
-    billingHelper.init()
+//    billingHelper.init()
     updateHelper.init()
     Notifications.init(this)
     NetworkMonitor.init(applicationContext)

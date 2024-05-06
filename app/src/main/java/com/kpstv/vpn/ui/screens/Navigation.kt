@@ -47,7 +47,6 @@ private class Load(val refresh: Boolean = false)
 @Composable
 fun NavigationScreen(
   navigator: ComposeNavigator,
-  billingHelper: BillingHelper,
   viewModel: VpnViewModel = composeViewModel(),
   flagViewModel: FlagViewModel = composeViewModel()
 ) {
@@ -64,16 +63,16 @@ fun NavigationScreen(
 
   val connectivityStatus = viewModel.connectivityStatus.collectAsState()
 
-  val isPremiumUnlocked = billingHelper.isPurchased.collectAsState(initial = false)
-  val planState = billingHelper.planState.collectAsState()
+//  val isPremiumUnlocked = billingHelper.isPurchased.collectAsState(initial = false)
+  val planState = SkuState.Loading
 
-  val onPurchaseComplete = billingHelper.purchaseComplete.collectAsState()
-  if (onPurchaseComplete.value) {
-    premiumBottomSheet.show()
-  }
+//  val onPurchaseComplete = billingHelper.purchaseComplete.collectAsState()
+//  if (onPurchaseComplete.value) {
+//    premiumBottomSheet.show()
+//  }
 
   val onPurchaseClick: (sku: String) -> Unit = { sku ->
-    billingHelper.launch(sku)
+//    billingHelper.launch(sku)
     premiumBottomSheet.hide()
   }
 
@@ -136,7 +135,7 @@ fun NavigationScreen(
             }
           }
         },
-        isPremiumUnlocked = isPremiumUnlocked.value,
+        isPremiumUnlocked = false,
         onPremiumClick = onPremiumClick,
         onItemClick = { config, type ->
           viewModel.changeServer(config.asVpnConfig(type))
@@ -160,7 +159,7 @@ fun NavigationScreen(
             }
           }
         },
-        isPremiumUnlocked = isPremiumUnlocked.value,
+        isPremiumUnlocked =false,
         onPremiumClick = onPremiumClick,
         goBack = { navController.goBack() }
       )
@@ -176,8 +175,8 @@ fun NavigationScreen(
     /* Premium Bottom Sheet */
     PremiumBottomSheet(
       premiumBottomSheet = premiumBottomSheet,
-      isPremiumUnlocked = isPremiumUnlocked.value,
-      planState = planState.value,
+      isPremiumUnlocked =false,
+      planState = SkuState.Loading,
       onPremiumClick = onPurchaseClick
     )
 
