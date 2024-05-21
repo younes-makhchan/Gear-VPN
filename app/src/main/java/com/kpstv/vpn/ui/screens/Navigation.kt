@@ -1,5 +1,6 @@
 package com.kpstv.vpn.ui.screens
 
+import android.util.Log
 import androidx.compose.runtime.*
 import androidx.compose.ui.platform.LocalContext
 import com.kpstv.navigation.compose.*
@@ -47,6 +48,7 @@ private class Load(val refresh: Boolean = false)
 @Composable
 fun NavigationScreen(
   navigator: ComposeNavigator,
+  billingHelper: BillingHelper,
   viewModel: VpnViewModel = composeViewModel(),
   flagViewModel: FlagViewModel = composeViewModel()
 ) {
@@ -63,20 +65,23 @@ fun NavigationScreen(
 
   val connectivityStatus = viewModel.connectivityStatus.collectAsState()
 
-//  val isPremiumUnlocked = billingHelper.isPurchased.collectAsState(initial = false)
-  val planState = SkuState.Loading
+  val isPremiumUnlocked = billingHelper.isPurchased.collectAsState(initial = false)
+  val planState = billingHelper.planState.collectAsState()
 
-//  val onPurchaseComplete = billingHelper.purchaseComplete.collectAsState()
-//  if (onPurchaseComplete.value) {
-//    premiumBottomSheet.show()
-//  }
+  val onPurchaseComplete = billingHelper.purchaseComplete.collectAsState()
+  if (onPurchaseComplete.value) {
+    premiumBottomSheet.show()
+  }
 
   val onPurchaseClick: (sku: String) -> Unit = { sku ->
-//    billingHelper.launch(sku)
+    billingHelper.launch(sku)
     premiumBottomSheet.hide()
   }
 
-  val onPremiumClick: () -> Unit = { premiumBottomSheet.show() }
+  val onPremiumClick: () -> Unit = {
+    Log.d("premium click :", "NavigationScreen: ")
+    premiumBottomSheet.show()
+  }
 
   val navController = rememberNavController<NavigationRoute>()
 
@@ -135,7 +140,7 @@ fun NavigationScreen(
             }
           }
         },
-        isPremiumUnlocked = false,
+        isPremiumUnlocked =  isPremiumUnlocked.value,
         onPremiumClick = onPremiumClick,
         onItemClick = { config, type ->
           viewModel.changeServer(config.asVpnConfig(type))
@@ -159,7 +164,7 @@ fun NavigationScreen(
             }
           }
         },
-        isPremiumUnlocked =false,
+        isPremiumUnlocked = isPremiumUnlocked.value,
         onPremiumClick = onPremiumClick,
         goBack = { navController.goBack() }
       )
@@ -175,8 +180,8 @@ fun NavigationScreen(
     /* Premium Bottom Sheet */
     PremiumBottomSheet(
       premiumBottomSheet = premiumBottomSheet,
-      isPremiumUnlocked =false,
-      planState = SkuState.Loading,
+      isPremiumUnlocked = isPremiumUnlocked.value,
+      planState = planState.value,
       onPremiumClick = onPurchaseClick
     )
 

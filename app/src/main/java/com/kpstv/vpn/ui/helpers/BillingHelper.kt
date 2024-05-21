@@ -36,7 +36,33 @@ sealed interface SkuState {
   }
   object Loading : SkuState
   object Error : SkuState
+
+  data class Sku1(internal val skus: List<skudummy> = emptyList(), internal val plans: List<Plan>) : SkuState {
+
+    val details: List<Data1> = skus.map { sku ->
+      val plan = plans.first { it.sku == sku.sku }
+      return@map Data1(
+        id = sku.sku,
+        billingName = plan.name,
+        billingPeriodMonth = plan.billingCycleMonth,
+        price = sku.price
+      )
+
+    }
+    data class Data1(
+      val id: String,
+      val billingName: String,
+      val billingPeriodMonth: Int,
+      val price: String,
+    )
 }
+
+}
+
+class skudummy(val sku: String, val price: String) {
+
+}
+
 
 class BillingHelper(
   private val activity: ComponentActivity,

@@ -1,12 +1,16 @@
 package com.kpstv.vpn.extensions.interceptor
 
+import android.util.Log
 import com.kpstv.vpn.BuildConfig
 import com.kpstv.vpn.data.api.PlanApi
 import com.kpstv.vpn.data.api.VpnApi
 import com.kpstv.vpn.ui.helpers.Device
 import okhttp3.Interceptor
+import okhttp3.OkHttp
 import okhttp3.Response
 import java.net.URL
+import java.security.cert.CertificateFactory
+import javax.net.ssl.HostnameVerifier
 
 class VpnInterceptor : Interceptor {
   private val url = URL(VpnApi.API)
@@ -14,6 +18,9 @@ class VpnInterceptor : Interceptor {
 
   override fun intercept(chain: Interceptor.Chain): Response {
     var request = chain.request()
+    Log.d("TAG", "WAKO ")
+    Log.d("request", "intercept: "+request.url+"|"+url)
+    Log.d("request", "intercept: "+request.url.host+"|"+url.host)
     if (request.url.host == planUrl.host) {
       request = request.newBuilder()
         .addHeader(CLIENT_TYPE, "android")
@@ -23,8 +30,8 @@ class VpnInterceptor : Interceptor {
         .build()
     } else if (request.url.host == url.host) {
       request = request.newBuilder()
-        .addHeader(RAPID_API_KEY, BuildConfig.GEAR_KEY)
-        .addHeader(RAPID_API_HOST, BuildConfig.GEAR_HOST)
+        .addHeader("ngrok-skip-browser-warning", BuildConfig.GEAR_KEY)
+//        .addHeader(RAPID_API_HOST, BuildConfig.GEAR_HOST)
         .build()
     }
     return chain.proceed(request)

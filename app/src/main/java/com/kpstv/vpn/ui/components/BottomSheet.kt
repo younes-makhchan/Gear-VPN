@@ -64,6 +64,7 @@ class BottomSheetState(isExpanded: Boolean = false) {
  * Note: Make sure the component is a child of Box or any layout stack content above
  * one another.
  */
+
 @OptIn(ExperimentalMaterialApi::class, androidx.compose.ui.ExperimentalComposeUiApi::class)
 @Composable
 fun BottomSheet(

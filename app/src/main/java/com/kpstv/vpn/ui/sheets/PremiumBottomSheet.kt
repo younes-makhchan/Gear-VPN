@@ -1,5 +1,6 @@
 package com.kpstv.vpn.ui.sheets
 
+import android.util.Log
 import androidx.annotation.RawRes
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.animation.AnimatedVisibility
@@ -39,11 +40,13 @@ import androidx.compose.ui.unit.dp
 import com.airbnb.lottie.compose.*
 import com.google.accompanist.insets.navigationBarsPadding
 import com.kpstv.vpn.R
+import com.kpstv.vpn.data.models.Plan
 import com.kpstv.vpn.ui.components.AutoSizeSingleLineText
 import com.kpstv.vpn.ui.components.BottomSheetState
 import com.kpstv.vpn.ui.components.ThemeButton
 import com.kpstv.vpn.ui.components.ThemeOutlinedButton
 import com.kpstv.vpn.ui.helpers.SkuState
+import com.kpstv.vpn.ui.helpers.skudummy
 import com.kpstv.vpn.ui.theme.CommonPreviewTheme
 import com.kpstv.vpn.ui.theme.Dimen.dp10
 import com.kpstv.vpn.ui.theme.Dimen.dp100
@@ -60,6 +63,7 @@ import com.kpstv.vpn.ui.theme.goldenYellowBright
 import com.kpstv.vpn.ui.theme.goldenYellowDark
 import es.dmoral.toasty.Toasty
 import java.util.Locale
+import kotlin.math.log
 
 @Composable
 fun PremiumBottomSheet(
@@ -70,10 +74,20 @@ fun PremiumBottomSheet(
 ) {
   BaseBottomSheet(bottomSheetState = premiumBottomSheet) {
     val isPlanLoading = remember(planState) {
-      planState is SkuState.Loading
+        planState is SkuState.Loading
     }
+    val skudummies = arrayOf(
+      skudummy("SKU123", "$19.99"),
+      skudummy("SKU456", "$29.99")
+    ).toList()
+    val plans1 = arrayOf(
+      Plan("SKU123", "Basic Plan", 1),
+      Plan("SKU456", "Standard Plan", 6),
+      Plan("SKU789", "Premium Plan", 12)
+    ).toList()
+    val s=  SkuState.Sku1(skudummies,plans1)
     val plans = remember(planState) {
-      if (planState is SkuState.Sku) planState.details else emptyList()
+      if (planState is SkuState) s.details else emptyList()
     }
     if (!isPremiumUnlocked) {
       CommonSheet(
@@ -83,7 +97,7 @@ fun PremiumBottomSheet(
         onBuyButtonClick = onPremiumClick,
         close = { premiumBottomSheet.hide() },
         hasPremium = false,
-        isLoading = isPlanLoading,
+        isLoading = false,
         isVisible = premiumBottomSheet.isVisible(),
         plans = plans
       )
@@ -111,10 +125,10 @@ private fun CommonSheet(
   hasPremium: Boolean,
   isLoading: Boolean = false,
   isVisible: Boolean = false,
-  plans: List<SkuState.Sku.Data> = emptyList()
+  plans: List<SkuState.Sku1.Data1> = emptyList()
 ) {
   val context = LocalContext.current
-
+  Log.d("plans", plans.toString(),);
   Box(
     modifier = Modifier
       .padding(horizontal = 5.dp)
@@ -216,7 +230,7 @@ private fun CommonSheet(
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
 private fun SubscriptionItem(
-  plan: SkuState.Sku.Data,
+  plan: SkuState.Sku1.Data1,
   selected: Boolean,
   onSelectionChange: () -> Unit,
   onClick: () -> Unit
@@ -308,8 +322,8 @@ fun PreviewPremiumBottomSheet() {
       hasPremium = false,
       isVisible = true,
       plans = listOf(
-        SkuState.Sku.Data(id = "sku", "Quarterly", 3, "₹129"),
-        SkuState.Sku.Data(id = "sku", "Monthly", 1, "₹59")
+        SkuState.Sku1.Data1(id = "sku", "Quarterly", 3, "₹129"),
+        SkuState.Sku1.Data1(id = "sku", "Monthly", 1, "₹59")
       )
     )
   }
