@@ -74,7 +74,7 @@ class BillingHelper(
 
   private var billingErrorMessage: String? = null
 
-  val isPurchased: Flow<Boolean> get() = Settings.HasPurchased.get()
+  val isPurchased = MutableStateFlow(false)
   private val purchaseCompleteStateFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
   val purchaseComplete: StateFlow<Boolean> = purchaseCompleteStateFlow.asStateFlow()
 
@@ -208,6 +208,7 @@ class BillingHelper(
     }?.let { purchase ->
       if (purchase.purchaseState != Purchase.PurchaseState.PURCHASED) {
         removeSubscription()
+        isPurchased.value = false
         return
       }
     }
@@ -231,6 +232,7 @@ class BillingHelper(
       if (purchase.skus.intersect(availableSkus.toSet()).isNotEmpty()) {
         Toasty.info(activity, activity.getString(R.string.restart_maybe), Toasty.LENGTH_LONG).show()
         Settings.HasPurchased.set(true)
+        isPurchased.value = true
         purchaseCompleteStateFlow.emit(true)
       }
     }
