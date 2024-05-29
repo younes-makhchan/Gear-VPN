@@ -1,5 +1,6 @@
 package com.kpstv.vpn.ui.helpers
 
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
@@ -168,7 +169,9 @@ class BillingHelper(
   }
 
   private suspend fun querySkuDetails() {
+    Log.d("tag", "querySkuDetails before: ")
     val plans = planViewModel.fetchPlans().data
+    Log.d("tag", "querySkuDetails after: ")
     availableSkus.clear() // method can called multiple times, better to clear it
     availableSkus.addAll(plans.map { it.sku })
 
